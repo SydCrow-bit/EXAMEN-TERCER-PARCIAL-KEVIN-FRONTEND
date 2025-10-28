@@ -1,1 +1,67 @@
-<p>empleados works!</p>
+<div class="container">
+  <h2>Gestión de Empleados</h2>
+
+  <!-- Formulario para crear empleado -->
+  <div class="form-section">
+    <h3>Agregar Nuevo Empleado</h3>
+    <form (ngSubmit)="crearEmpleado()" #empleadoForm="ngForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" [(ngModel)]="nuevoEmpleado.nombre" name="nombre" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="apellido">Apellido:</label>
+          <input type="text" id="apellido" [(ngModel)]="nuevoEmpleado.apellido" name="apellido" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="correo">Correo:</label>
+          <input type="email" id="correo" [(ngModel)]="nuevoEmpleado.correo" name="correo" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="salario">Salario:</label>
+          <input type="number" id="salario" [(ngModel)]="nuevoEmpleado.salario" name="salario" step="0.01" min="0" required>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn-primary" [disabled]="!empleadoForm.valid">
+        Crear Empleado
+      </button>
+    </form>
+  </div>
+
+  <!-- Tabla de empleados -->
+  <div class="table-section">
+    <h3>Lista de Empleados ({{empleados.length}})</h3>
+    
+    <div *ngIf="empleados.length === 0" class="no-data">
+      No hay empleados registrados
+    </div>
+
+    <table *ngIf="empleados.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Correo</th>
+          <th>Salario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let empleado of empleados">
+          <td>{{ empleado.id }}</td>
+          <td>{{ empleado.nombre }}</td>
+          <td>{{ empleado.apellido }}</td>
+          <td>{{ empleado.correo }}</td>
+          <td>${{ empleado.salario | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
